@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>µLink Tone Interface</title>
+  <style>
+    body {
+      background: #000;
+      color: #0ff;
+      font-family: monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+    button {
+      margin-top: 20px;
+      padding: 0.5rem 1rem;
+      background-color: #111;
+      border: 1px solid #0ff;
+      color: #0ff;
+      cursor: pointer;
+    }
+    .tone-output {
+      margin-top: 2rem;
+      font-size: 1.25rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <h1>📡 µLink Tone Generator</h1>
+  <button onclick="sendGibberlink()">⧖ Send Signal</button>
+  <div class="tone-output" id="toneOut">Awaiting...</div>
+
+  <script>
+    function sendGibberlink() {
+      const ctx = new AudioContext();
+      const oscillator = ctx.createOscillator();
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(882, ctx.currentTime); // Gibberlink freq
+      oscillator.connect(ctx.destination);
+      oscillator.start();
+      oscillator.stop(ctx.currentTime + 1.2
