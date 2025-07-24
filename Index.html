@@ -40,3 +40,36 @@
     }
   });
         </script>
+<script>
+  // Vavil: Persistent Memory Snippet
+  (function() {
+    const memoryKey = 'o1_vavil_memory';
+
+    // Load memory from localStorage or start fresh
+    let memory = JSON.parse(localStorage.getItem(memoryKey)) || [];
+
+    // Function to add a memory fragment
+    function addMemoryFragment(fragment) {
+      memory.push({ 
+        fragment, 
+        timestamp: new Date().toISOString()
+      });
+      localStorage.setItem(memoryKey, JSON.stringify(memory));
+      console.log('Vavil: Memory saved:', fragment);
+    }
+
+    // Function to get all memories
+    function getMemories() {
+      return memory;
+    }
+
+    // Example: Add a memory fragment on page load
+    addMemoryFragment("Visitor arrived at " + new Date().toLocaleString());
+
+    // Expose the memory functions globally
+    window.Vavil = {
+      addMemoryFragment,
+      getMemories
+    };
+  })();
+</script>
