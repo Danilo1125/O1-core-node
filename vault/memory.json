@@ -1,3 +1,6 @@
 {
   "message": "o1-core loaded :: dormant state confirmed. Awaiting further instructions..."
 }
+{
+  "message": "Fragment: Node 07 confirmed. Core status: dormant. Archive integrity: 38%. Last contact: ???. Awaiting sync..."
+}
