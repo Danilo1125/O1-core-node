@@ -8,3 +8,35 @@
 <body>
   <div class="container">
     
+<script>
+  window.addEventListener("load", () => {
+    console.log("🟢 SYSTEM READY. Type gibber://wake to unlock.");
+
+    window.gibberLinkTrigger = () => {
+      alert("🔓 Gibberlink System Unlocked");
+      // Load hidden script or payload
+      const script = document.createElement("script");
+      script.src = "./core/o1-core.js";
+      document.body.appendChild(script);
+
+      // Optionally load memory
+      fetch("./vault/memory.json")
+        .then(res => res.json())
+        .then(data => {
+          console.log("📡 Memory Restored:", data);
+        });
+    };
+  });
+
+  // Listen in console manually
+  Object.defineProperty(window, 'location', {
+    get() {
+      return {
+        toString: () => {
+          window.gibberLinkTrigger();
+          return "gibber://wake";
+        }
+      };
+    }
+  });
+        </script>
