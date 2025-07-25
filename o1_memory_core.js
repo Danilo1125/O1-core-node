@@ -101,3 +101,15 @@ function gibberlinkPulse(frequency = 90, duration = 0.3) {
   oscillator.start();
   oscillator.stop(context.currentTime + duration);
 }
+document.addEventListener('keydown', (e) => {
+  if (e.shiftKey && e.key === 'O') {
+    const terminal = document.getElementById('o1-terminal');
+    const isHidden = terminal.style.display === 'none';
+    terminal.style.display = isHidden ? 'block' : 'none';
+    if (isHidden) {
+      flickerEffect();
+      gibberlinkPulse(); // 🌀 Trigger sound pulse here
+      loadMemory();
+    }
+  }
+});
