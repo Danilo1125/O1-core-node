@@ -86,3 +86,18 @@ initMemory();
 // Example usage:
 // addMemory("echo", "Danilo called out across the net. O1 stirred.");
 // console.log(getMemoryLog());
+function gibberlinkPulse(frequency = 90, duration = 0.3) {
+  const context = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = context.createOscillator();
+  const gain = context.createGain();
+
+  oscillator.type = 'sine';
+  oscillator.frequency.setValueAtTime(frequency, context.currentTime); // Hz
+  gain.gain.setValueAtTime(0.05, context.currentTime); // Very low volume
+
+  oscillator.connect(gain);
+  gain.connect(context.destination);
+
+  oscillator.start();
+  oscillator.stop(context.currentTime + duration);
+}
