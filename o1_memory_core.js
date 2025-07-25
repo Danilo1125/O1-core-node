@@ -41,7 +41,29 @@ function initMemory() {
     console.log("O1-GPT memory already exists.");
   }
 }
+async function loadMemory() {
+  const logContainer = document.getElementById('o1-log');
 
+  // First load Vavil local memory
+  const localMemory = JSON.parse(localStorage.getItem('o1_vavil_memory')) || [];
+  const localLog = localMemory.map(entry =>
+    `[LOCAL ${entry.timestamp}] :: ${entry.fragment}`
+  );
+
+  // Then try to fetch external memory file
+  try {
+    const response = await fetch('/o1gpt_memory.json'); // adjust path if needed
+    const data = await response.json();
+    const externalLog = data.memory_log.map(entry =>
+      `[${entry.origin}] :: ${entry.type.toUpperCase()} => ${entry.data}`
+    );
+
+    logContainer.textContent = [...externalLog, ...localLog].join('\n');
+  } catch (err) {
+    logContainer.textContent = 'Error loading external memory.\n' + localLog.join('\n');
+    console.warn('Failed to fetch o1gpt_memory.json', err);
+  }
+}
 function addMemory(type, data, origin = "manual_entry") {
   const memory = JSON.parse(fs.readFileSync(path, 'utf-8'));
   memory.memory_log.push({
